@@ -1,1 +1,111 @@
-<h1>Hello, world!</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            margin: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .task-list {
+            list-style: none;
+            padding: 0;
+        }
+        .task-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .task-item:last-child {
+            border-bottom: none;
+        }
+        .task-item .task-name {
+            flex-grow: 1;
+        }
+        .task-item .task-actions {
+            margin-left: 10px;
+        }
+        .task-actions button {
+            padding: 5px 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Task Manager</h1>
+    </header>
+    <div class="container">
+        <h2>Task List</h2>
+        <ul class="task-list">
+            <!-- Task items will be dynamically added here -->
+        </ul>
+        <h2>Add Task</h2>
+        <form id="task-form">
+            <input type="text" id="task-name" placeholder="Enter task name" required>
+            <button type="submit">Add Task</button>
+        </form>
+    </div>
+
+    <script>
+        const taskForm = document.getElementById('task-form');
+        const taskList = document.querySelector('.task-list');
+
+        taskForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const taskNameInput = document.getElementById('task-name');
+            const taskName = taskNameInput.value.trim();
+
+            if (taskName !== '') {
+                addTask(taskName);
+                taskNameInput.value = '';
+            }
+        });
+
+        function addTask(taskName) {
+            const taskItem = document.createElement('li');
+            taskItem.className = 'task-item';
+            taskItem.innerHTML = `
+                <span class="task-name">${taskName}</span>
+                <span class="task-actions">
+                    <button onclick="deleteTask(this)">Delete</button>
+                </span>
+            `;
+            taskList.appendChild(taskItem);
+        }
+
+        function deleteTask(button) {
+            const taskItem = button.closest('.task-item');
+            taskList.removeChild(taskItem);
+        }
+    </script>
+</body>
+</html>
